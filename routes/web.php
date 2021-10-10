@@ -16,3 +16,23 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('create-log', function () {
+
+    \Log::channel('michael_log')->info('This is info log level for testing');
+    \Log::channel('michael_log')->warning('This is warning log level for testing');
+    \Log::channel('michael_log')->error('This is error log level for testing');
+    \Log::channel('michael_log')->alert('This is alert log level for testing');
+    \Log::channel('michael_log')->emergency('This is emergency log level for testing');
+    \Log::channel('michael_log')->notice('This is notice log level for testing');
+
+    dd('done');
+});
+
+Route::get('log-content', function () {
+    $content = fopen(storage_path('logs/myCustomLogFile.log'), 'r');
+    while(!feof($content)){
+        $line = fgets($content);
+        echo $line."<br>";
+    }
+});
